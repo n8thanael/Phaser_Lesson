@@ -6,23 +6,20 @@ demo.state0.prototype = {
     create: function(){
         game.stage.backgroundColor = '#DDDDDD';
         console.log('state0');
+        // this function is added to every state
+        // listens for a keypress and interperates it as a state change
         addChangeStateEventListeners();
+
+        game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
     },
 
     update: function(){}
     
 };
 
-function changeState(i, stateNum) {
-	console.log(i);
-	game.state.start('state' + stateNum);
 
-}
-
-function addKeyCallback(key, fn, args){
-	 game.input.keyboard.addKey(key).onDown.add(fn, null, null, args);
-}
-
+// all keypresses are mapped within here to pass and argument to the call back function: addKeyCallback
+// this in turn calls the changeState function and executes the actual state change.
 function addChangeStateEventListeners(){
 	addKeyCallback(Phaser.Keyboard.ZERO, changeState, 0);
 	addKeyCallback(Phaser.Keyboard.ONE, changeState, 1);
@@ -35,4 +32,14 @@ function addChangeStateEventListeners(){
 	addKeyCallback(Phaser.Keyboard.EIGHT, changeState, 8);
 	addKeyCallback(Phaser.Keyboard.NINE, changeState, 9);
 
+}
+
+function addKeyCallback(key, fn, args){
+	 game.input.keyboard.addKey(key).onDown.add(fn, null, null, args);
+}
+
+// Is called by addChageStateEventListeners and recieves the state number to change.
+function changeState(i, stateNum) {
+	//console.log(i);
+	game.state.start('state' + stateNum);
 }
